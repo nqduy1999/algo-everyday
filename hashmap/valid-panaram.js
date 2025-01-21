@@ -23,4 +23,32 @@ const validPanagram = (s, t) => {
   return true;
 };
 
-console.log(validPanagram("aacc", "ccac"));
+// hashmap here to check if
+const validPanagramTwoPointer = (s, t) => {
+  let hashMapS = {};
+  if (s.length !== t.length) return false;
+  let pointerStart = 0;
+  let pointerEnd = s.length - 1;
+
+  while (pointerStart <= pointerEnd) {
+    hashMapS[s[pointerStart]] = (hashMapS[s[pointerStart]] ?? 0) + 1;
+    hashMapS[s[pointerEnd]] = (hashMapS[s[pointerEnd]] ?? 0) + 1;
+    pointerEnd--;
+    pointerStart++;
+  }
+  for (let i = 0; i < t.length; i++) {
+    hashMapS[t[i]] = hashMapS[t[i]] - 1;
+    if (hashMapS[t[i]] < 0) {
+      return false;
+    }
+  }
+  return true;
+};
+
+console.log("two-pointer");
+console.time(validPanagramTwoPointer("anagram", "nagaram"));
+console.timeEnd(validPanagramTwoPointer("anagram", "nagaram"));
+
+console.log("hashmap");
+console.time(validPanagram("anagram", "nagaram"));
+console.timeEnd(validPanagram("anagram", "nagaram"));
