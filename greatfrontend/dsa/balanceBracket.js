@@ -1,3 +1,7 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
 class Stack {
   constructor() {
     this.stack = [];
@@ -24,24 +28,33 @@ class Stack {
   }
 }
 
-function isBalancedBrackets(str) {
+const matchParenthese = {
+  "{": "}",
+  "(": ")",
+  "[": "]",
+};
+
+var isValid = function (s) {
   const matchingBracket = {
     "{": "}",
     "[": "]",
     "(": ")",
   };
-
+  if (s.length === 1) {
+    if (matchingBracket[s[0]]) return false;
+    return true;
+  }
   const stack = new Stack();
-
-  for (let i = 0; i <= str.length; i++) {
-    if (matchingBracket[stack.peek()] === str[i]) {
+  for (let i = 0; i < s.length; i++) {
+    if (!s[i]) break;
+    if (matchingBracket[stack.peek()] === s[i]) {
       stack.pop();
     } else {
-      stack.push(str[i]);
+      stack.push(s[i]);
     }
   }
   if (stack.length === 0) return true;
   return false;
-}
+};
 
-console.log(isBalancedBrackets(`([])`));
+console.log(isValid("([])"));
